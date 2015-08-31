@@ -1,0 +1,23 @@
+{
+  "name": "PAT",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Yichang812/PAT",
+  "authors": [
+    "Li Yichang"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "fontawesome": "~4.4.0",
+    "angular-route": "~1.4.5"
+  }
+}
