@@ -1,5 +1,6 @@
 
-angular.module('patApp',['ui.codemirror']).controller('editorController', ['$scope',function($scope) {
+
+patApp.controller('editorController', ['$scope',function($scope) {
     // The modes
     $scope.modes = ['Scheme', 'XML', 'Javascript'];
     $scope.mode = $scope.modes[0];
