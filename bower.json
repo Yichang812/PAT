@@ -17,7 +17,12 @@
     "tests"
   ],
   "dependencies": {
-    "fontawesome": "~4.4.0",
-    "angular-route": "~1.4.5"
+    "fontawesome": "latest",
+    "angular-route": "latest",
+    "angular": "latest",
+    "bootstrap": "latest",
+    "jquery": "latest",
+    "angular-ui-codemirror": "latest",
+    "codemirror": "latest"
   }
 }

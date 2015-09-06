@@ -1,0 +1,8 @@
+
+<section ng-controller="editorController">
+
+    <textarea ui-codemirror="cmOption" ng-model="cmModel"></textarea>
+
+    Mode : <select ng-model="mode" ng-options="m for m in modes" ng-change="modeChanged()"></select>
+
+</section>

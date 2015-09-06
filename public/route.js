@@ -1,6 +1,7 @@
 // create the module and name it scotchApp
 // also include ngRoute for all our routing needs
-var patApp = angular.module('patApp', ['ngRoute']);
+var patApp = angular.module('patApp', ['ngRoute','ui.codemirror']);
+
 
 // configure our routes
 patApp.config(function($routeProvider) {
@@ -26,5 +27,8 @@ patApp.config(function($routeProvider) {
         .when('/graph',{
             templateUrl : 'view/graph.html',
             controller  : 'graphController'
+        })
+        .otherwise({
+            redirectTo:'/'
         });
 });
