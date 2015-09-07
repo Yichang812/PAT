@@ -1,8 +1,21 @@
+<div class="editor-container">
+    <ul class="nav nav-tabs">
+        <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.title)}"><a ng-click="onClickTab(tab)">
+            {{tab.title}}</a><span class="glyphicon glyphicon-remove" id="closeIcon" ng-click="closeTab(tab)"></span>
+        </li>
+        <li><a ng-click="addTab()">+</a></li>
+    </ul>
+    <div id="mainView">
+        <div ng-include="'editorContent'"></div>
+    </div>
+</div>
 
-<section ng-controller="editorController">
+<script type="text/ng-template" id="editorContent">
+    <div ng-repeat="content in tabs" ng-show="isThisContent(content)">
+        <section>
+            <textarea ui-codemirror="cmOption" ng-model="content.cmModel"></textarea>
+            Mode : <select ng-model="content.mode" ng-options="m for m in modes" ng-change="modeChanged(content)"></select>
+        </section>
+    </div>
+</script>
 
-    <textarea ui-codemirror="cmOption" ng-model="cmModel"></textarea>
-
-    Mode : <select ng-model="mode" ng-options="m for m in modes" ng-change="modeChanged()"></select>
-
-</section>
