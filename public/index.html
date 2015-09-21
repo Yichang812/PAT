@@ -11,6 +11,7 @@
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-route/angular-route.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
 
     <script src="../bower_components/codemirror/lib/codemirror.js"></script>
     <script src="../bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
@@ -26,25 +27,26 @@
     <script src="controller/verifierController.js"></script>
 
     <link rel="stylesheet" type="text/css" href="view/css/editor.css"/>
+    <link rel="stylesheet" type="text/css" href="view/css/index.css">
     <script src="view/js/editor.js"></script>
 </head>
 <body>
 
 <!-- HEADER AND NAVBAR -->
 <header>
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">Process Analysis Toolkit</a>
-            </div>
+    <div id="menu-wrapper">
+        <div id="menu-bar"></div>
 
-            <!--<ul class="nav navbar-nav navbar-right">-->
-                <!--<li><a href="#"><i class="fa fa-home"></i> Editor</a></li>-->
-                <!--<li><a href="#verifier"><i class="fa fa-shield"></i> verifier</a></li>-->
-                <!--<li><a href="#simulator"><i class="fa fa-comment"></i> simulator</a></li>-->
-            <!--</ul>-->
-        </div>
-    </nav>
+        <div id="menu-tab" class="lead">P.A.T.</div>
+    </div>
+
+    <!--<nav class="navbar navbar-default navbar-static-top">-->
+        <!--<div class="container">-->
+            <!--<div class="navbar-header">-->
+                <!--<a class="navbar-brand" href="/">Process Analysis Toolkit</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</nav>-->
 </header>
 
 <!-- MAIN CONTENT AND INJECTED VIEWS -->

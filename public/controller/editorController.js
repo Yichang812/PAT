@@ -4,6 +4,7 @@ patApp.controller('editorController', ['$scope',function($scope) {
     // The modes
     $scope.modes = ['Scheme', 'XML', 'Javascript'];
     $scope.mode = $scope.modes[0];
+    $scope.mode = $scope.modes[0];
 
 
     //functions for tabs
@@ -20,7 +21,6 @@ patApp.controller('editorController', ['$scope',function($scope) {
         cmOption:{
             lineNumbers: true,
             indentWithTabs: true,
-            theme:'lesser-dark',
             mode:$scope.mode.toLowerCase()}
     }, {
         title: 'Model_2',
@@ -28,7 +28,6 @@ patApp.controller('editorController', ['$scope',function($scope) {
         cmOption:{
             lineNumbers: true,
             indentWithTabs: true,
-            theme:'lesser-dark',
             mode:$scope.mode.toLowerCase()}
     }];
 
@@ -52,7 +51,7 @@ patApp.controller('editorController', ['$scope',function($scope) {
         $scope.tabCount ++;
         console.log($scope.tabCount);
         var newTitle = 'Model_' + $scope.tabCount;
-        $scope.tabs.push({title:newTitle,cmMode:'',cmOption:{lineNumbers: true,indentWithTabs: true,theme:'lesser-dark',mode:$scope.mode.toLowerCase()}});
+        $scope.tabs.push({title:newTitle,cmMode:'',cmOption:{lineNumbers: true,indentWithTabs: true,mode:$scope.mode.toLowerCase()}});
     };
     $scope.closeTab = function(tab){
         var index = $scope.tabs.indexOf(tab);

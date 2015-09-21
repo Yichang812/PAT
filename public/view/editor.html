@@ -1,23 +1,98 @@
 <div class="editor-container">
+    <!-----------------menu bar--------------------->
+    <ul class="menu-bar">
+        <div class="dropdown">
+            <button class="dropdown-toggle" type="button" id="dropdown-file" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                File
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdown-file">
+                <li><a href="#">New model</a></li>
+                <li><a href="#">Import file</a></li>
+                <li><a href="#">Export file</a></li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-toggle" type="button" id="dropdown-edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Edit
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdown-edit">
+                <li><a href="#">Undo</a></li>
+                <li><a href="#">Copy</a></li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-toggle" type="button" id="dropdown-view" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                View
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdown-view">
+                <li><a href="#">Output window</a></li>
+                <li><a href="#">Edit window</a></li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-toggle" type="button" id="dropdown-tools" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Tools
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdown-tools">
+                <li><a href="#">Check grammar</a></li>
+                <li><a href="#">Verification</a></li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-toggle" type="button" id="dropdown-examples" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Examples
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdown-examples">
+                <li><a href="#"> </a></li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-toggle" type="button" id="dropdown-windows" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Windows
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdown-windows">
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-toggle" type="button" id="dropdown-help" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Help
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdown-help">
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+            </ul>
+        </div>
+        <span class="splitter"></span>
+        <div class="quick-access"><span class="check-grammar glyphicon glyphicon-check"></span></div>
+        <div class="quick-access">Verification</div>
+        <div class="quick-access">Simulation</div>
+        <div class="quick-access">Graph Differences</div>
+    </ul>
+
+    <!----------------------- tabs--------------------->
     <ul class="nav nav-tabs">
         <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.title)}"><a ng-click="onClickTab(tab)">
-            {{tab.title}}</a><span class="glyphicon glyphicon-remove" id="closeIcon" ng-click="closeTab(tab)"></span>
+            {{tab.title}}</a><span ng-click="closeTab(tab)">x</span>
         </li>
         <li><a ng-click="addTab()">+</a></li>
     </ul>
-    <ul class="tool-bar">
-
-    </ul>
-    <div id="mainView">
+    <div class="mainView">
         <div ng-include="'editorContent'"></div>
+
+    </div>
+    <div class="output">
+        <span class="output-label">Output</span>
     </div>
 </div>
 
 <script type="text/ng-template" id="editorContent">
     <div>
         <section ng-repeat="content in tabs" ng-show="isThisContent(content)">
-            <textarea ui-codemirror="content.cmOption" ng-model="content.cmModel"></textarea>
-            Mode : <select ng-model="mode" ng-options="m for m in modes" ng-change="changeMode(content,mode)"></select>
+            <textarea class="editor-content" ui-codemirror="content.cmOption" ng-model="content.cmModel"></textarea>
+            <select class="language-selector" ng-model="mode" ng-options="m for m in modes" ng-change="changeMode(content,mode)">
+            </select>
         </section>
     </div>
 </script>
