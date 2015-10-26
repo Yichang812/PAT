@@ -6,9 +6,11 @@
                 File
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdown-file">
-                <li><a href="#">New model</a></li>
-                <li><a href="#">Import file</a></li>
-                <li><a href="#">Export file</a></li>
+                <li><a ng-click="addTab()">New model</a></li>
+                <!--<li><input type="file" id="file-upload" nv-file-select="" uploader="uploader" autoUpload="true"/></li>-->
+                <li><input type="file" id="files" ng-model="files" onchange="angular.element(this).scope().uploadFile(files)"/></li>
+                <label for="files" class="custom-file-upload">Import file</label>
+                <li><a href="#">Download file</a></li>
             </ul>
         </div>
         <div class="dropdown">
@@ -65,28 +67,34 @@
             </ul>
         </div>
         <span class="splitter"></span>
-        <div class="quick-access"><span class="check-grammar glyphicon glyphicon-check"></span></div>
-        <div class="quick-access">Verification</div>
-        <div class="quick-access">Simulation</div>
-        <div class="quick-access">Graph Differences</div>
+        <div class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Check Grammar"><img src="../pic/check_icon.png"/></div>
+        <div class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Simulation"><img src="../pic/simulation_icon.png"/></div>
+        <div class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Verfication"><img src="../pic/verification_icon.png"/></div>
+        <div class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Graph Differences"><img src="../pic/graph_icon.png"/></div>
     </ul>
 
     <!----------------------- tabs--------------------->
+
     <ul class="nav nav-tabs">
-        <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.title)}"><a ng-click="onClickTab(tab)">
-            {{tab.title}}</a><span ng-click="closeTab(tab)">x</span>
+        <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.title)}" >
+            <a ng-click="onClickTab(tab)">{{tab.title}}</a><span ng-click="closeTab(tab)">x</span>
         </li>
         <li><a ng-click="addTab()">+</a></li>
     </ul>
     <div class="mainView">
+        <!--include editor template-->
         <div ng-include="'editorContent'"></div>
-
     </div>
     <div class="output">
         <span class="output-label">Output</span>
     </div>
+    <div class="progress" style="">
+        <p>{{uploader.queue[0].file.name}}</p>
+        <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.queue[0].progress + '%' }"></div>
+    </div>
 </div>
 
+template for editor
 <script type="text/ng-template" id="editorContent">
     <div>
         <section ng-repeat="content in tabs" ng-show="isThisContent(content)">
@@ -96,4 +104,5 @@
         </section>
     </div>
 </script>
+
 

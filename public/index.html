@@ -3,32 +3,35 @@
 <head>
     <!--include libraries going to be used-->
     <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css" href="../bower_components/fontawesome/css/font-awesome.css"/>
-    <link rel="stylesheet" type="text/css" href="../bower_components/codemirror/lib/codemirror.css"/>
-    <link rel="stylesheet" type="text/css" href="../bower_components/codemirror/theme/lesser-dark.css"/>
-    <link rel="stylesheet" type="text/css" href="../bower_components/codemirror/theme/icecoder.css"/>
-
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-route/angular-route.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
-
+    
+<!--import code mirror-->
     <script src="../bower_components/codemirror/lib/codemirror.js"></script>
     <script src="../bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
-
+    <!--supported language-->
     <script src="../bower_components/codemirror/mode/xml/xml.js"></script>
     <script src="../bower_components/codemirror/mode/javascript/javascript.js"></script>
     <script src="../bower_components/codemirror/mode/scheme/scheme.js"></script>
-
+    <!--theme-->
+    <link rel="stylesheet" type="text/css" href="../bower_components/codemirror/lib/codemirror.css"/>
+    <link rel="stylesheet" type="text/css" href="../bower_components/codemirror/theme/neo.css"/>
+    
+<!--import angular-file-upload for file uploading-->
+    <script src="../bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+<!--import Angular file-->
     <script src="route.js"></script>
-    <script src="controller/editorController.js"></script>
-    <script src="controller/graphController.js"></script>
-    <script src="controller/simulatorController.js"></script>
-    <script src="controller/verifierController.js"></script>
-
+    <script src="controller/editorCtrl.js"></script>
+    <script src="controller/graphCtrl.js"></script>
+    <script src="controller/simulatorCtrl.js"></script>
+    <script src="controller/verifierCtrl.js"></script>
+    
+<!--import css-->
     <link rel="stylesheet" type="text/css" href="view/css/editor.css"/>
     <link rel="stylesheet" type="text/css" href="view/css/index.css">
-    <script src="view/js/editor.js"></script>
+    
 </head>
 <body>
 
@@ -39,20 +42,15 @@
 
         <div id="menu-tab" class="lead">P.A.T.</div>
     </div>
-
-    <!--<nav class="navbar navbar-default navbar-static-top">-->
-        <!--<div class="container">-->
-            <!--<div class="navbar-header">-->
-                <!--<a class="navbar-brand" href="/">Process Analysis Toolkit</a>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</nav>-->
 </header>
 
 <!-- MAIN CONTENT AND INJECTED VIEWS -->
 <div ng-app="patApp">
     <div ng-view></div>
 </div>
+<footer>
+    
+</footer>
 
 </body>
 </html>
