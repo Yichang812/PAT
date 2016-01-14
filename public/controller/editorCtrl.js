@@ -2,7 +2,7 @@
 
 patApp.controller('editorController',['$scope',function($scope) {
     // The modes
-    $scope.modes = ['Scheme', 'csp', 'Javascript'];//syntax supported
+    $scope.modes = ['CSP','Scheme', 'Javascript'];//syntax supported
     $scope.mode = $scope.modes[0];
     $scope.currentTab = 'Model_1';
 
