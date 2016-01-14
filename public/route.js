@@ -2,7 +2,6 @@
 // also include ngRoute for all our routing needs
 var patApp = angular.module('patApp', ['ngRoute','ui.codemirror']);
 
-
 // configure our routes
 patApp.config(function($routeProvider) {
     $routeProvider
