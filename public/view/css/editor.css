@@ -114,7 +114,8 @@
     z-index: 2;
     position:relative;
     left:90%;
-    bottom:15px;
+    bottom:25px;
+    height:25px;
     background:white;
     color:#999;
     outline:0;

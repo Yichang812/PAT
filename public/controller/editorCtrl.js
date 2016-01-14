@@ -2,7 +2,7 @@
 
 patApp.controller('editorController',['$scope',function($scope) {
     // The modes
-    $scope.modes = ['Scheme', 'XML', 'Javascript'];//syntax supported
+    $scope.modes = ['Scheme', 'csp', 'Javascript'];//syntax supported
     $scope.mode = $scope.modes[0];
     $scope.currentTab = 'Model_1';
 
@@ -19,7 +19,7 @@ patApp.controller('editorController',['$scope',function($scope) {
         cmOption:{
             lineNumbers: true,
             indentWithTabs: true,
-            theme:'neo',
+            theme:'eclipse',
             mode:$scope.mode.toLowerCase()}
     }];
 
@@ -59,7 +59,7 @@ patApp.controller('editorController',['$scope',function($scope) {
                 {
                     lineNumbers: true,
                     indentWithTabs: true,
-                    theme:'neo',
+                    theme:'eclipse',
                     mode:$scope.mode.toLowerCase()
                 }
             }
@@ -83,7 +83,6 @@ patApp.controller('editorController',['$scope',function($scope) {
 
     $scope.uploadFile = function(files){
         if(window.File && window.FileList && window.FileReader){
-            console.log(files);
 
             for (var i = 0; i<files.length;i++) {
                 var fileReader = new FileReader();
@@ -96,6 +95,9 @@ patApp.controller('editorController',['$scope',function($scope) {
                 };
                 fileReader.readAsText(files[i]);
             }
+            var path = files[0].val();
+            console.log(path);
+
         }else{
              alert('File API is not supported');
             }
