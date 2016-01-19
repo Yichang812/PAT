@@ -1,6 +1,6 @@
 // create the module and name it scotchApp
 // also include ngRoute for all our routing needs
-var patApp = angular.module('patApp', ['ngRoute','ui.codemirror']);
+var patApp = angular.module('patApp', ['ngRoute','ui.codemirror','ngSanitize']);
 
 // configure our routes
 patApp.config(function($routeProvider) {

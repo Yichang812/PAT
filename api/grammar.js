@@ -9,7 +9,7 @@ var grammar_csp_endpoint = edge.func({
                './dll/Antlr3.Runtime.dll']
 });
 router.post('/csp', function(req, res) {
-  result = grammar_csp_endpoint({'spec': req.body.spec}, true);
+  result = grammar_csp_endpoint({spec: JSON.parse(req.body.specStr)}, true);
   res.json({result: result});
 });
 

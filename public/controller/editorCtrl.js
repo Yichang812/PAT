@@ -2,7 +2,7 @@
 
 patApp.controller('editorController',['$scope',function($scope) {
     // The modes
-    $scope.modes = ['CSP','Scheme', 'Javascript'];//syntax supported
+    $scope.modes = ['CSP','Scheme','Javascript'];//syntax supported
     $scope.mode = $scope.modes[0];
     $scope.currentTab = 'Model_1';
 
@@ -10,12 +10,14 @@ patApp.controller('editorController',['$scope',function($scope) {
     $scope.tabs = [{
         title: 'Model_1',
         cmModel:
-        ';; Scheme code in here.\n' +
-        '(define (double x)\n\t(* x x))\n\n\n' +
-        '<!-- XML code in here. -->\n' +
-        '<root>\n\t<foo>\n\t</foo>\n\t<bar/>\n</root>\n\n\n' +
-        '// Javascript code in here.\n' +
-        'function foo(msg) {\n\tvar r = Math.random();\n\treturn "" + r + " : " + msg;\n}',
+        '//@@Dining Philosopher@@\n'+
+        '////////////////The Model//////////////////\n'+
+        '#define N 8;\n'+
+        'Phil(i) = get.i.(i+1)%N -> get.i.i -> eat.i -> put.i.(i+1)%N -> put.i.i -> Phil(i);\n'+
+        'Fork(x) = get.x.x -> put.x.x -> Fork(x) [] get.(x-1)%N.x -> put.(x-1)%N.x -> Fork(x);\n'+
+        'College() = ||x:{0..N-1}@(Phil(x)||Fork(x));\n'+
+        'Implementation() = College() \\ {get.0.0,get.0.1,put.0.0,put.0.1,eat.1,get.1.1,get.1.2,put.1.1,put.1.2,eat.2,get.2.2,get.2.3,put.2.2,put.2.3,eat.3,get.3.3,get.3.4,put.3.3,put.3.4,eat.4,get.4.4,get.4.5,put.4.4,put.4.5,eat.5,get.5.5,get.5.6,put.5.5,put.5.6,eat.6,get.6.6,get.6.7,put.6.6,put.6.7,eat.7,get.7.7,get.7.0,put.7.7,put.7.0};\n'+
+        'Specification() = eat.0 -> Specification();\n',
         cmOption:{
             lineNumbers: true,
             indentWithTabs: true,
@@ -103,35 +105,32 @@ patApp.controller('editorController',['$scope',function($scope) {
     };
 
     //for verification
-
+    $scope.grammarResult = "Result";
     $scope.checkGrammar = function(){
         var tab;
         for(var i = 0; i<$scope.tabs.length;i++){
             tab = $scope.tabs[i];
             if(tab.title == $scope.currentTab){
-                //remove all comments
+                
                 var content = tab.cmModel;
 
-                content = content.replace(/\\/g,'\\\\'); //replace \ with \\
-                //content = content.split('\n');
-                
+                $.ajax({
+                   url:'api/grammar/csp',
+                   type:'POST',
+                   dataType:'json',
+                   data:{specStr: JSON.stringify(content)},
+                   success:function(data){
+                       $scope.grammarResult = data.result.replace(/\n/g,"<br>");
+                       $scope.$apply();
+                   }
 
-                //$.ajax({
-                //    url:'http://172.16.42.5:3000/api/grammar/csp',
-                //    type:'POST',
-                //    dataType:'json',
-                //    data:{spec: content},
-                //    success:function(data){
-                //        $scope.grammarResult = data;
-                //    }
-                //
-                //});
-
-
-
-
+                }).fail(function() {
+                    alert( "Check grammar error" );
+                });
             }
         }
+
+
     }
 }]);
 

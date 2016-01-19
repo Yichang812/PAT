@@ -1,5 +1,5 @@
 <div class="editor-container">
-    <!-----------------menu bar--------------------->
+    <!-----------------menu bar-------------------->
     <ul class="menu-bar">
         <div class="dropdown">
             <button class="dropdown-toggle" type="button" id="dropdown-file" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -7,7 +7,7 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdown-file">
                 <li><a ng-click="addTab()">New model</a></li>
-                <!--<li><input type="file" id="file-upload" nv-file-select="" uploader="uploader" autoUpload="true"/></li>-->
+                <li><input type="file" id="file-upload" nv-file-select="" uploader="uploader" autoUpload="true"/></li>
                 <li><input type="file" id="files" ng-model="files" onchange="angular.element(this).scope().uploadFile(files)"/></li>
                 <label for="files" class="custom-file-upload">Import file</label>
                 <li><a href="#">Download file</a></li>
@@ -73,7 +73,7 @@
         <div class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Graph Differences"><img src="../pic/graph_icon.png"/></div>
     </ul>
 
-    <!----------------------- tabs--------------------->
+    <!----------------------- tabs-------------------->
 
     <ul class="nav nav-tabs">
         <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.title)}" >
@@ -87,12 +87,13 @@
     </div>
     <div class="output">
         <span class="output-label">output</span>
-        <div>{{grammarResult}}</div>
+        <!-- <div style="white-space: pre-wrap;">{{grammarResult}}</div> -->
+        <div ng-bind-html="grammarResult"></div>
     </div>
-    <div class="progress" style="">
+    <!-- <div class="progress" style="">
         <p>{{uploader.queue[0].file.name}}</p>
         <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.queue[0].progress + '%' }"></div>
-    </div>
+    </div> -->
 </div>
 
 template for editor

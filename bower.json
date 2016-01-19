@@ -23,6 +23,7 @@
     "bootstrap": "latest",
     "jquery": "latest",
     "angular-ui-codemirror": "latest",
-    "codemirror": "latest"
+    "codemirror": "latest",
+    "angular-sanitize":"latest"
   }
 }
