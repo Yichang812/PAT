@@ -39,7 +39,6 @@ patApp.controller('editorController',['$scope',function($scope) {
     $scope.onClickTab = function (tab) {
         $scope.currentTab = tab.title;
     };
-    //add a tab
 
     $scope.addTab = function(title,content){
         $scope.tabCount ++;
@@ -69,17 +68,17 @@ patApp.controller('editorController',['$scope',function($scope) {
         if(!$scope.$$phase)$scope.$apply();
 
     };
-    //close a tab
+
     $scope.closeTab = function(tab){
         var index = $scope.tabs.indexOf(tab);
         console.log(index);
         $scope.tabs.splice(index,1);
         $scope.tabCount--;
     };
+
     $scope.changeMode = function (content,mode) {
         content.cmOption.mode = mode.toLowerCase();
     };
-
 
     $scope.uploadFile = function(files){
         if(window.File && window.FileList && window.FileReader){
@@ -101,8 +100,39 @@ patApp.controller('editorController',['$scope',function($scope) {
         }else{
              alert('File API is not supported');
             }
+    };
+
+    //for verification
+
+    $scope.checkGrammar = function(){
+        var tab;
+        for(var i = 0; i<$scope.tabs.length;i++){
+            tab = $scope.tabs[i];
+            if(tab.title == $scope.currentTab){
+                //remove all comments
+                var content = tab.cmModel;
+
+                content = content.replace(/\/\/.*/g,' ');
+                content = content.replace(/;/g,';$');
+                content = content.split('$');
+
+                $.ajax({
+                    url:api,
+                    type:POST,
+                    dataType:json,
+                    data:content,
+                    success:function(data){
+                        $scope.grammarResult = data;
+
+                    }
+
+                });
+
+
+
+
+            }
+        }
     }
-
-
 }]);
 

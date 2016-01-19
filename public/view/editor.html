@@ -67,7 +67,7 @@
             </ul>
         </div>
         <span class="splitter"></span>
-        <div class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Check Grammar"><img src="../pic/check_icon.png"/></div>
+        <div class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Check Grammar" ng-click="checkGrammar()"><img src="../pic/check_icon.png"/></div>
         <div class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Simulation"><img src="../pic/simulation_icon.png"/></div>
         <div class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Verfication"><img src="../pic/verification_icon.png"/></div>
         <div class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Graph Differences"><img src="../pic/graph_icon.png"/></div>
@@ -86,7 +86,8 @@
         <div ng-include="'editorContent'"></div>
     </div>
     <div class="output">
-
+        <span class="output-label">output</span>
+        <div>{{grammarResult}}</div>
     </div>
     <div class="progress" style="">
         <p>{{uploader.queue[0].file.name}}</p>
