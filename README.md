@@ -13,8 +13,8 @@ A cloud-based system model verification tool
 Type
 ```
 cd PATH_TO_THIS_FOLDER
-node install bower -g
-node install
+npm install bower -g
+npm install
 bower install
 ```
 All the setup should be done now!

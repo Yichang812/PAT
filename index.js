@@ -18,7 +18,6 @@ app.use(bodyParser.json());
 // api router
 app.use('/api', require('./api/index'));
 
-app.use(express.static(__dirname + '/public'));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 //home page
