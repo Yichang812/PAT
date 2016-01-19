@@ -1,0 +1,165 @@
+.menu-bar{
+    z-index: 5;
+    width:100%;
+    height:30px;
+    position:absolute;
+    top:10px;
+    background-color: #555;
+    border: 1px solid #555;
+}
+.menu-bar > .dropdown,.menu-bar>.quick-access{
+    position: relative;
+    display: inline-block;
+    margin-left:10px;
+}
+.menu-bar > .dropdown > button{
+    background: transparent;
+    border:0;
+    color:#f5f5f5;
+    font-size:14px;
+    font-weight: normal;
+    line-height:25px;
+}
+.menu-bar > .dropdown.open > button{
+    background: rgba(0,0,0,0.1);
+}
+.splitter{
+    width:1px;
+    height:100%;
+    margin-left:20px;
+    border-left:2px solid #999;
+}
+.quick-access{
+    width:30px;
+    height:30px;
+    background:transparent;
+    border:0;
+    outline:0;
+    margin-left:20px;
+    cursor:hand;
+}
+.quick-access img{
+    width:50%;
+    height:50%;
+}
+/*tabs for different model*/
+.nav-tabs{
+    position:absolute;
+    top:40px;
+    left: 0;
+    width:100%;
+    background: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    height:30px;
+}
+
+.nav-tabs > li {
+    position:relative;
+    left:30px;
+}
+
+
+/*normal tabs*/
+.nav-tabs > li > a{
+    display:inline-block;
+    margin-right:-1px;
+    line-height:4px;
+    height:30px;
+    color:#999;
+    border-bottom:4px solid transparent;
+    border-radius:3px 3px 0 0;
+
+}
+.nav-tabs > li:hover > a{
+    background-color: transparent;
+    border:1px solid transparent;
+    border-bottom:4px solid #ddd;
+}
+.nav-tabs > li.active > a{
+    display:inline-block;
+    background-color: white;
+    color:#999;
+    border-bottom:4px solid white;
+}
+.nav-tabs > li.active:hover > a{
+    background-color: white;
+    color:#999;
+    border-bottom:4px solid #4cc8f1;
+}
+
+.nav-tabs > li > span {
+    display: none;
+    cursor:pointer;
+    position:absolute;
+    right: 5px;
+    top: 2px;
+    color:#999;
+}
+.nav-tabs > li:hover >span{
+    display: inline-block;
+}
+
+/*editor*/
+.mainView{
+    position:absolute;
+    width:100%;
+    left:0;
+    top:70px;
+}
+.editor-content{
+    z-index: 1;
+    position:relative;
+}
+.language-selector{
+    z-index: 2;
+    position:relative;
+    left:90%;
+    bottom:25px;
+    height:25px;
+    background:white;
+    color:#999;
+    outline:0;
+    border:0;
+    padding-left: 5px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+.language-selector:hover{
+    background: rgba(0,0,0,0.1);
+}
+/*output window*/
+.output{
+    position:absolute;
+    top:375px;
+    width:100%;
+    border-top:10px solid #f5f5f5;
+}
+.output-label{
+    color:#999;
+    margin-left: 10px;
+}
+input[type="file"]{
+    display:none;
+}
+.custom-file-upload{
+    display: inline-block;
+    padding: 6px 20px;
+    cursor: pointer;
+    font-weight:normal;
+    margin-bottom: 0;
+}
+
+.progress{
+    position:absolute;
+    bottom:-10px;
+    right:10px;
+    z-index: 2;
+    height:5px;
+    width:20%;
+}
+.progress-bar{
+    background-color: #5cb85c;
+}
+
+
+
