@@ -2,13 +2,13 @@
 A cloud-based system model verification tool
 
 ###Setup Instruction
-*Download and install [Git](https://git-scm.com/download/win)
+* Download and install [Git](https://git-scm.com/download/win)
 
-*Download and install [Node.js](https://nodejs.org/en/)
+* Download and install [Node.js](https://nodejs.org/en/)
 
-*Download and install [Edge.js](https://github.com/tjanczuk/edge#windows) (please setup the environment of your computer before installation)
+* Download and install [Edge.js](https://github.com/tjanczuk/edge#windows) (please setup the environment of your computer before installation)
 
-*Download this repository and open your cmd or terminal
+* Download this repository and open your cmd or terminal
 
 Type
 ```
