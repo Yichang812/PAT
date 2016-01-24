@@ -105,7 +105,7 @@ patApp.controller('editorController',['$scope',function($scope) {
     };
 
     //for verification
-    $scope.grammarResult = "Result";
+    $scope.grammarResult = ' ';
     $scope.checkGrammar = function(){
         var tab;
         for(var i = 0; i<$scope.tabs.length;i++){
