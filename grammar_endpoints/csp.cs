@@ -1,7 +1,22 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 using System.IO;
 using System.Threading.Tasks;
-using System.Collections.Generic;
+
+using Antlr.Runtime;
+using Antlr.Runtime.Tree;
+
+using PAT.Common;
+using PAT.Common.Ultility;
+using PAT.Common.Classes.Assertion;
+using PAT.Common.Classes.DataStructure;
+using PAT.Common.Classes.Expressions;
+using PAT.Common.Classes.Expressions.ExpressionClass;
+using PAT.Common.Classes.LTS;
+using PAT.Common.Classes.ModuleInterface;
+using PAT.Common.Classes.Ultility;
+
 
 using PAT.CSP.LTS;
 
@@ -12,13 +27,13 @@ public class Startup
     try
     {
       string specStr = (string)input.spec;
-      Specification spec = new Specification(specStr);
+      SpecificationBase spec = new Specification(specStr);
       return spec.GetSpecification();
     }
     catch (Exception e)
     {
       return e.StackTrace;
-      // return e.TargetSite.GetType().Name;
+      //return e.TargetSite.GetType().Name;
     }
   }
 }

@@ -73,7 +73,6 @@ patApp.controller('editorController',['$scope',function($scope) {
 
     $scope.closeTab = function(tab){
         var index = $scope.tabs.indexOf(tab);
-        console.log(index);
         $scope.tabs.splice(index,1);
         $scope.tabCount--;
     };
@@ -113,7 +112,7 @@ patApp.controller('editorController',['$scope',function($scope) {
             if(tab.title == $scope.currentTab){
                 
                 var content = tab.cmModel;
-
+                console.log(JSON.stringify(content));
                 $.ajax({
                    url:'api/grammar/csp',
                    type:'POST',
@@ -121,6 +120,7 @@ patApp.controller('editorController',['$scope',function($scope) {
                    data:{specStr: JSON.stringify(content)},
                    success:function(data){
                        $scope.grammarResult = data.result.replace(/\n/g,"<br>");
+                       console.log(data);
                        $scope.$apply();
                    }
 
