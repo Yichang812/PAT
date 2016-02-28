@@ -1,6 +1,5 @@
 
-
-patApp.controller('editorController',['$scope',function($scope) {
+patApp.controller('editorController',['$scope','DataFactory',function($scope,DataFactory) {
     // The modes
     $scope.modes = ['CSP','Scheme','Javascript'];//syntax supported
     $scope.mode = $scope.modes[0];
@@ -130,7 +129,32 @@ patApp.controller('editorController',['$scope',function($scope) {
             }
         }
 
+    };
+    $scope.verification = function(){
+        var tab;
+        for(var i = 0; i<$scope.tabs.length;i++){
+            tab = $scope.tabs[i];
+            if(tab.title == $scope.currentTab){
+                
+                var content = tab.cmModel;
+                //console.log(JSON.stringify(content));
+                DataFactory.setSpecification(content);
+                $.ajax({
+                   url:'api/verification/assertions',
+                   type:'POST',
+                   dataType:'json',
+                   data:{specStr: JSON.stringify(content)},
+                   success:function(data){
+                        console.log(data);
+                       DataFactory.setAssertions(data.assertions);
+                      // $scope.$apply();
+                   }
 
+                }).fail(function() {
+                    alert( "Verification error" );
+                });
+            }
+        }
     }
 }]);
 
