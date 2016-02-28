@@ -10,6 +10,7 @@ app.use(morgan('dev'));
 
 // serve staic files from 'public' folder
 app.use(express.static('public'));
+app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 // middleware to parse URLencoded / json requests
 app.use(bodyParser.urlencoded({extended: true}));
@@ -18,16 +19,9 @@ app.use(bodyParser.json());
 // api router
 app.use('/api', require('./api/index'));
 
-app.use('/bower_components',  express.static(__dirname + '/bower_components'));
-
-//home page
-app.get("/",function(req,res){
-  res.sendFile("../public/index.html");
-});
-
 var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('Example app listening at http://%s:%s', host, port);
+  console.log('PAT listening at http://%s:%s', host, port);
 });
