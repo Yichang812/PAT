@@ -1,0 +1,40 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.IO;
+using System.Threading.Tasks;
+using System.ComponentModel;
+
+using PAT.CSP.LTS;
+using PAT.Common;
+using PAT.Common.Classes.Expressions.ExpressionClass;
+using PAT.Common.Classes.ModuleInterface;
+
+public class Startup
+{
+  public async Task<object> Invoke(dynamic input)
+  {
+    try
+    {
+      string specStr = (string)input.spec;
+      string assertionStr = (string)input.assertion;
+
+      SpecificationBase spec = new Specification(specStr);
+      AssertionBase assertion = spec.AssertionDatabase[assertionStr];
+
+      assertion.UIInitialize(null, 0, 0);
+      assertion.VerificationOutput.GenerateCounterExample = true;
+      assertion.InternalStart();
+
+      return new { 
+      	statistics = assertion.GetVerificationStatistics(), 
+      	type = (int)assertion.VerificationOutput.VerificationResult 
+      };
+    }
+    catch (Exception e)
+    {
+      return e.StackTrace;
+      //return e.TargetSite.GetType().Name;
+    }
+  }
+}

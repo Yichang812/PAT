@@ -15,8 +15,20 @@ router.post('/assertions', function(req, res) {
 });
 
 // Verify assertion
+var verification_verify_assertion_endpoint = edge.func({
+  source: './verification_endpoints/verify_assertion.cs',
+  references: ['./dll/PAT.Common.dll',
+               './dll/PAT.Module.CSP.dll',
+               './dll/Antlr3.Runtime.dll',
+               './dll/PAT.Module.LTS.dll']
+});
 router.post('/verify_assertion', function(req, res) {
-  res.json({result: "Not Implemented."})
+  result = verification_verify_assertion_endpoint({
+  	spec: JSON.parse(req.body.specStr),
+  	assertion: req.body.assertion
+  }, true);
+  console.log(result);
+  res.json({result: result});
 });
 
 
