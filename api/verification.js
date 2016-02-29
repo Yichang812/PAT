@@ -27,7 +27,6 @@ router.post('/verify_assertion', function(req, res) {
   	spec: JSON.parse(req.body.specStr),
   	assertion: req.body.assertion
   }, true);
-  console.log(result);
   res.json({result: result});
 });
 

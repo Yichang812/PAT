@@ -6,27 +6,10 @@ patApp.controller('editorController',['$scope','DataFactory',function($scope,Dat
     $scope.currentTab = 'Model_1';
 
     //initiate the first tab with sample content, ref: code mirror
-    $scope.tabs = [{
-        title: 'Model_1',
-        cmModel:
-        '//@@Dining Philosopher@@\n'+
-        '////////////////The Model//////////////////\n'+
-        '#define N 8;\n'+
-        'Phil(i) = get.i.(i+1)%N -> get.i.i -> eat.i -> put.i.(i+1)%N -> put.i.i -> Phil(i);\n'+
-        'Fork(x) = get.x.x -> put.x.x -> Fork(x) [] get.(x-1)%N.x -> put.(x-1)%N.x -> Fork(x);\n'+
-        'College() = ||x:{0..N-1}@(Phil(x)||Fork(x));\n'+
-        'Implementation() = College() \\ {get.0.0,get.0.1,put.0.0,put.0.1,eat.1,get.1.1,get.1.2,put.1.1,put.1.2,eat.2,get.2.2,get.2.3,put.2.2,put.2.3,eat.3,get.3.3,get.3.4,put.3.3,put.3.4,eat.4,get.4.4,get.4.5,put.4.4,put.4.5,eat.5,get.5.5,get.5.6,put.5.5,put.5.6,eat.6,get.6.6,get.6.7,put.6.6,put.6.7,eat.7,get.7.7,get.7.0,put.7.7,put.7.0};\n'+
-        'Specification() = eat.0 -> Specification();\n',
-        cmOption:{
-            lineNumbers: true,
-            indentWithTabs: true,
-            theme:'eclipse',
-            mode:$scope.mode.toLowerCase()}
-    }];
+    $scope.tabs = DataFactory.getModels();;
 
 
     $scope.tabCount = $scope.tabs.length;
-
 
     //check if a tab is active
     $scope.isActiveTab = function(tabTitle) {
@@ -79,7 +62,11 @@ patApp.controller('editorController',['$scope','DataFactory',function($scope,Dat
     $scope.changeMode = function (content,mode) {
         content.cmOption.mode = mode.toLowerCase();
     };
-
+    $scope.saveModels = function(){
+        for(var i = 0; i<$scope.tabs.length; i++){
+            DataFactory.addModel($scope.tab[i]);
+        }
+    };
     $scope.uploadFile = function(files){
         if(window.File && window.FileList && window.FileReader){
 
@@ -94,9 +81,6 @@ patApp.controller('editorController',['$scope','DataFactory',function($scope,Dat
                 };
                 fileReader.readAsText(files[i]);
             }
-            var path = files[0].val();
-            console.log(path);
-
         }else{
              alert('File API is not supported');
             }
@@ -137,7 +121,6 @@ patApp.controller('editorController',['$scope','DataFactory',function($scope,Dat
             if(tab.title == $scope.currentTab){
                 
                 var content = tab.cmModel;
-                //console.log(JSON.stringify(content));
                 DataFactory.setSpecification(content);
                 $.ajax({
                    url:'api/verification/assertions',
@@ -145,9 +128,7 @@ patApp.controller('editorController',['$scope','DataFactory',function($scope,Dat
                    dataType:'json',
                    data:{specStr: JSON.stringify(content)},
                    success:function(data){
-                        console.log(data);
                        DataFactory.setAssertions(data.assertions);
-                      // $scope.$apply();
                    }
 
                 }).fail(function() {
