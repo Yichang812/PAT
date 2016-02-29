@@ -24,11 +24,13 @@ public class Startup
 
       assertion.UIInitialize(null, 0, 0);
       assertion.VerificationOutput.GenerateCounterExample = true;
+      // assertion.VerificationMode = false;
       assertion.InternalStart();
 
       return new { 
-      	statistics = assertion.GetVerificationStatistics(), 
-      	type = (int)assertion.VerificationOutput.VerificationResult 
+      	statistics = assertion.GetResultString() + '\n' +
+      		assertion.GetVerificationStatistics(), 
+      	type = (int)assertion.VerificationOutput.VerificationResult
       };
     }
     catch (Exception e)
