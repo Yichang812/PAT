@@ -10,7 +10,6 @@
                 <li><input type="file" id="file-upload" nv-file-select="" uploader="uploader" autoUpload="true"/></li>
                 <li><input type="file" id="files" ng-model="files" onchange="angular.element(this).scope().uploadFile(files)"/></li>
                 <label for="files" class="custom-file-upload">Import file</label>
-                <li><a href="#">Download file</a></li>
             </ul>
         </div>
         <div class="dropdown">
@@ -18,8 +17,10 @@
                 Edit
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdown-edit">
-                <li><a href="#">Undo</a></li>
-                <li><a href="#">Copy</a></li>
+                <li><a href="#">Undo <span class="shortcut pull-right">Ctrl+Z</span></a></li>
+                <li><a href="#">Copy <span class="shortcut pull-right">Ctrl+C</span></a></li>
+                <li><a href="#">Cut <span class="shortcut pull-right">Ctrl+X</span></a></li>
+                <li><a href="#">Paste <span class="shortcut pull-right">Ctrl+V</span></a></li>
             </ul>
         </div>
         <div class="dropdown">
@@ -36,8 +37,8 @@
                 Tools
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdown-tools">
-                <li><a href="#">Check grammar</a></li>
-                <li><a href="#">Verification</a></li>
+                <li><a href="#" ng-click="checkGrammar()">Check grammar</a></li>
+                <li><a href="#/verifier" ng-click="verification()">Verification</a></li>
             </ul>
         </div>
         <div class="dropdown">

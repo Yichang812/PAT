@@ -161,5 +161,8 @@ input[type="file"]{
     background-color: #5cb85c;
 }
 
-
+.shortcut{
+    font-size: 0.9em;
+    color:gray;
+}
 

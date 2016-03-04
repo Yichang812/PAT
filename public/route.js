@@ -8,24 +8,24 @@ patApp.config(function($routeProvider) {
 
         // route for the home page
         .when('/', {
-            templateUrl : 'model/editor.html',
+            templateUrl : 'view/editor.html',
             controller  : 'editorController',
             css:'view/css/editor.css'
         })
 
         // route for the about page
         .when('/verifier', {
-            templateUrl : 'model/verifier.html',
+            templateUrl : 'view/verifier.html',
             controller  : 'verifierController'
         })
 
         // route for the contact page
         .when('/simulator', {
-            templateUrl : 'model/simulator.html',
+            templateUrl : 'view/simulator.html',
             controller  : 'simulatorController'
         })
         .when('/graph',{
-            templateUrl : 'model/graph.html',
+            templateUrl : 'view/graph.html',
             controller  : 'graphController'
         })
         .otherwise({
