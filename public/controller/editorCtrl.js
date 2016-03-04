@@ -1,5 +1,5 @@
 
-patApp.controller('editorController',['$scope','DataFactory',function($scope,DataFactory) {
+patApp.controller('editorController',['$scope','DataFactory','Example',function($scope,DataFactory,Example) {
     // The modes
     $scope.modes = ['CSP','Scheme','Javascript'];//syntax supported
     $scope.mode = $scope.modes[0];
@@ -85,6 +85,11 @@ patApp.controller('editorController',['$scope','DataFactory',function($scope,Dat
              alert('File API is not supported');
             }
     };
+    $scope.getCSPExample = function(){
+        var example = Example.getCSP();
+        console.log(example);
+        $scope.addTab(example.title, example.content);
+    }
 
     //for verification
     $scope.grammarResult = ' ';
