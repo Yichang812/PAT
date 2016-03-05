@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var morgan = require('morgan')
 var bodyParser = require('body-parser');
@@ -31,24 +33,26 @@ var Account = require('./auth/account_model');
 
 // FOR TEST ONLY - admin account
 var adminAccount = new Account({
-	email: 'admin',
+	email: 'admin@email.com',
 	password: 'admin'
 });
 adminAccount.save();
 
 // create local strategy for user authentication
-myLocalStrategy = new localStrategy((email, password, cb) => {
-	Account.findOne({
-		email: email
-	}, (err, account) => {
-		if(err) {
-			return cb(err);
-		}
-		if(!account){
-			return cb(null, false);
-		}
-		account.verify(password, callback);
-	});
+var myLocalStrategy = new localStrategy(
+	(email, password, cb) => {
+		Account.findOne({
+			email: email
+		}, (err, account) => {
+			if(err) {
+				return cb(err);
+			}
+			if(!account){
+				return cb(null, false);
+			}
+			console.log(account);
+			account.verify(password, cb);
+		});
 });
 
 passport.use(myLocalStrategy);

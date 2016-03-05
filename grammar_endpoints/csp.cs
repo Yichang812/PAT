@@ -32,8 +32,9 @@ public class Startup
     }
     catch (Exception e)
     {
-      return e.StackTrace;
+      // return e.StackTrace;
       //return e.TargetSite.GetType().Name;
+      return "Error in the model";
     }
   }
 }

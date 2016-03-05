@@ -166,3 +166,22 @@ input[type="file"]{
     color:gray;
 }
 
+.login-alert{
+    z-index: 1000;
+    position: absolute;
+    bottom: 0;
+}
+.disable{
+    pointer-events: none;
+}
+.logout{
+    color:#f5f5f5;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 25px;
+    text-decoration: none;
+}
+
+.logout:hover {
+    text-decoration: none;
+}

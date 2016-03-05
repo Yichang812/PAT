@@ -1,5 +1,5 @@
 
-patApp.controller('editorController',['$scope','DataFactory','Example',function($scope,DataFactory,Example) {
+patApp.controller('editorController',['$scope','$timeout','DataFactory','Example',function($scope,$timeout,DataFactory,Example) {
     // The modes
     $scope.modes = ['CSP','Scheme','Javascript'];//syntax supported
     $scope.mode = $scope.modes[0];
@@ -91,8 +91,30 @@ patApp.controller('editorController',['$scope','DataFactory','Example',function(
         $scope.addTab(example.title, example.content);
     }
 
-    //for verification
-    $scope.grammarResult = ' ';
+    $scope.grammarResult = '';
+    $scope.user={};
+    $scope.loginError = '';
+    $scope.notLogin = true;
+
+    $scope.login = function (user) {
+        $scope.user = angular.copy(user);
+        console.log($scope.user.email);
+        $.ajax({
+           url:'login',
+           type:'POST',
+           dataType:'json',
+           data:{username: $scope.user.email,password:$scope.user.password},
+           success:function(){
+             $scope.notLogin = false;
+             $scope.$apply();
+             console.log("success");
+           }
+        }).error(function(httpObj, textStatus) {       
+            $scope.loginError = 'Your email or password is incorrect!';
+            $scope.$apply();
+        });
+
+    };
     $scope.checkGrammar = function(){
         var tab;
         for(var i = 0; i<$scope.tabs.length;i++){
@@ -100,7 +122,7 @@ patApp.controller('editorController',['$scope','DataFactory','Example',function(
             if(tab.title == $scope.currentTab){
                 
                 var content = tab.cmModel;
-                console.log(JSON.stringify(content));
+                // console.log(JSON.stringify(content));
                 $.ajax({
                    url:'api/grammar/csp',
                    type:'POST',
@@ -112,8 +134,13 @@ patApp.controller('editorController',['$scope','DataFactory','Example',function(
                        $scope.$apply();
                    }
 
-                }).fail(function() {
-                    alert( "Check grammar error" );
+                }).error(function(httpObj, textStatus) {       
+                    if(httpObj.status==401) {
+                        console.log("here");
+                        $scope.loginAlert = true;
+                        $scope.$apply();
+                        $timeout(function() {$scope.loginAlert=false;}, 5000);
+                    }
                 });
             }
         }
@@ -136,8 +163,13 @@ patApp.controller('editorController',['$scope','DataFactory','Example',function(
                        DataFactory.setAssertions(data.assertions);
                    }
 
-                }).fail(function() {
-                    alert( "Verification error" );
+                }).error(function(httpObj, textStatus) {       
+                    if(httpObj.status==401) {
+                        console.log("here");
+                        $scope.loginAlert = true;
+                        $scope.$apply();
+                        $timeout(function() {$scope.loginAlert=false;}, 5000);
+                    }
                 });
             }
         }

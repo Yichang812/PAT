@@ -12,12 +12,12 @@ var AccountSchema = new mongoose.Schema({
 	}
 });
 
-AccountSchema.method('verify', (password, cb) => {
+AccountSchema.methods.verify = function(password, cb) {
 	if(this.password === password) {
 		cb(null, this);
 	} else {
 		return cb(null, false);
 	}
-});
+};
 
 module.exports = mongoose.model('Account', AccountSchema);
