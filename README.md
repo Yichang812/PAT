@@ -33,3 +33,13 @@ $ nodemon index.js
 //restart the server by 
 $ rs
 ```
+###Implemented API
+_The API are implemented by Express.js_
+
+| API  | URL | Methods | data| 
+| ------------- | ------------- |
+| Login  | login | post | {username: _username_, password: _password_}|
+| Logout  | logout | get| |
+| Check grammar| api/grammar/csp| post| {specStr: _model content_}|
+| Get assertion list| api/verification/assertions| post|{spectStr: _model content_}|
+| Verify selected assertion| api/verification/verify_assertion| post| {specStr: _model content_, assertion: _selected assertion_}|
