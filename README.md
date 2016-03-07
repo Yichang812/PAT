@@ -37,7 +37,7 @@ $ rs
 _The API are implemented by Express.js_
 
 | API  | URL | Methods | data| 
-| ------------- | ------------- |
+| ------|------- | -----|-------- |
 | Login  | login | post | {username: _username_, password: _password_}|
 | Logout  | logout | get| |
 | Check grammar| api/grammar/csp| post| {specStr: _model content_}|
