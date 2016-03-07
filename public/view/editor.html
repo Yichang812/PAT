@@ -1,4 +1,4 @@
-<div class="editor-container">
+<div class="editor-container" ng-init="inti()">
     <!-----------------menu bar-------------------->
     <ul class="menu-bar">
         <div class="dropdown">
@@ -67,14 +67,14 @@
                 <li><a href="#"></a></li>
             </ul>
         </div>
-        <div class="dropdown pull-right" style="margin-right:120px;" ng-show="notLogin">
+        <div class="dropdown pull-right" style="margin-right:120px;" ng-show="!isLogin">
             <button class="dropdown-toggle" type="button" id="dropdown-login" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 Login
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdown-login" style=" width:300px;padding: 25px 25px 25px 25px;">
                 <form class="form" id="formLogin">
                     <div class="form-group">
-                        <input name="email" id="email" type="email" ng-model="user.email" class="form-control" placeholder="Email"></input>
+                        <input name="email" id="email" type="email" required  ng-model="user.email" class="form-control" placeholder="Email"></input>
                     </div>
                     <div class="form-group">
                         <input name="password" id="password" type="password" ng-model="user.password" class="form-control" placeholder="Password"></input>
@@ -84,7 +84,7 @@
                 </form>
             </div>
         </div>
-        <div class="pull-right" style="margin-right:120px;" ng-show="!notLogin">
+        <div class="pull-right" style="margin-right:120px;" ng-show="isLogin">
             <a class="logout" href="/logout" ng-click="logout()">
                 Logout
             </a>
@@ -110,7 +110,7 @@
         <div ng-include="'editorContent'"></div>
     </div>
     <div class="output">
-        <span class="output-label">output</span>
+        <span class="output-label">Result:</span>
         <div ng-bind-html="grammarResult"></div>
     </div>
     <div class="alert alert-danger login-alert" role="alert" ng-show="loginAlert"> You need to <strong>Login</strong> to get this service</div>

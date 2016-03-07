@@ -1,12 +1,18 @@
 
-patApp.controller('editorController',['$scope','$timeout','DataFactory','Example',function($scope,$timeout,DataFactory,Example) {
+patApp.controller('editorController',['$scope','$timeout','$sce','$interval','DataFactory','Example','AuthService',function($scope,$timeout,$sce,$interval,DataFactory,Example,AuthService) {
     // The modes
     $scope.modes = ['CSP','Scheme','Javascript'];//syntax supported
     $scope.mode = $scope.modes[0];
     $scope.currentTab = 'Model_1';
+    $scope.isLogin = false;
+
+    $scope.init = function(){
+        $scope.isLogin = AuthService.isLogin();
+    };
+    
 
     //initiate the first tab with sample content, ref: code mirror
-    $scope.tabs = DataFactory.getModels();;
+    $scope.tabs = DataFactory.getModels();
 
 
     $scope.tabCount = $scope.tabs.length;
@@ -47,10 +53,11 @@ patApp.controller('editorController',['$scope','$timeout','DataFactory','Example
                 }
             }
         );
+
         //set the new-create tab to active
         $scope.currentTab = newTitle;
         if(!$scope.$$phase)$scope.$apply();
-
+        $scope.saveModels();
     };
 
     $scope.closeTab = function(tab){
@@ -62,11 +69,12 @@ patApp.controller('editorController',['$scope','$timeout','DataFactory','Example
     $scope.changeMode = function (content,mode) {
         content.cmOption.mode = mode.toLowerCase();
     };
+
+    //$interval(saveModels,5000,100);
     $scope.saveModels = function(){
-        for(var i = 0; i<$scope.tabs.length; i++){
-            DataFactory.addModel($scope.tab[i]);
-        }
-    };
+         DataFactory.addModel($scope.tabs);
+    }
+
     $scope.uploadFile = function(files){
         if(window.File && window.FileList && window.FileReader){
 
@@ -87,34 +95,22 @@ patApp.controller('editorController',['$scope','$timeout','DataFactory','Example
     };
     $scope.getCSPExample = function(){
         var example = Example.getCSP();
-        console.log(example);
         $scope.addTab(example.title, example.content);
     }
 
     $scope.grammarResult = '';
-    $scope.user={};
     $scope.loginError = '';
-    $scope.notLogin = true;
 
-    $scope.login = function (user) {
-        $scope.user = angular.copy(user);
-        console.log($scope.user.email);
-        $.ajax({
-           url:'login',
-           type:'POST',
-           dataType:'json',
-           data:{username: $scope.user.email,password:$scope.user.password},
-           success:function(){
-             $scope.notLogin = false;
-             $scope.$apply();
-             console.log("success");
-           }
-        }).error(function(httpObj, textStatus) {       
-            $scope.loginError = 'Your email or password is incorrect!';
-            $scope.$apply();
-        });
-
+    $scope.login = function(user){
+        if(!AuthService.login(angular.copy(user))){
+            $scope.loginError = $sce.trustAsHtml('Wrong email or password!');
+        }
+        $scope.isLogin = AuthService.isLogin();
     };
+    $scope.logout = function(){
+        AuthService.logout();
+        $scope.isLogin = AuthService.isLogin();
+    }
     $scope.checkGrammar = function(){
         var tab;
         for(var i = 0; i<$scope.tabs.length;i++){
@@ -122,25 +118,20 @@ patApp.controller('editorController',['$scope','$timeout','DataFactory','Example
             if(tab.title == $scope.currentTab){
                 
                 var content = tab.cmModel;
-                // console.log(JSON.stringify(content));
                 $.ajax({
                    url:'api/grammar/csp',
                    type:'POST',
                    dataType:'json',
                    data:{specStr: JSON.stringify(content)},
                    success:function(data){
-                       $scope.grammarResult = data.result.replace(/\n/g,"<br>");
-                       console.log(data);
+                       $scope.grammarResult = $sce.trustAsHtml(data.result.replace(/\n/g,"<br>"));
                        $scope.$apply();
                    }
 
-                }).error(function(httpObj, textStatus) {       
-                    if(httpObj.status==401) {
-                        console.log("here");
-                        $scope.loginAlert = true;
-                        $scope.$apply();
-                        $timeout(function() {$scope.loginAlert=false;}, 5000);
-                    }
+                }).error(function(httpObj, textStatus) { 
+                    $scope.loginAlert = true;
+                    $scope.$apply();
+                    $timeout(function() {$scope.loginAlert=false;}, 5000);
                 });
             }
         }
@@ -163,13 +154,10 @@ patApp.controller('editorController',['$scope','$timeout','DataFactory','Example
                        DataFactory.setAssertions(data.assertions);
                    }
 
-                }).error(function(httpObj, textStatus) {       
-                    if(httpObj.status==401) {
-                        console.log("here");
-                        $scope.loginAlert = true;
-                        $scope.$apply();
-                        $timeout(function() {$scope.loginAlert=false;}, 5000);
-                    }
+                }).error(function(httpObj, textStatus) {
+                    $scope.loginAlert = true;
+                    $scope.$apply();
+                    $timeout(function() {$scope.loginAlert=false;}, 5000);
                 });
             }
         }

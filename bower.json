@@ -23,6 +23,6 @@
     "jquery": "latest",
     "angular-ui-codemirror": "latest",
     "codemirror": "latest",
-    "angular-sanitize":"latest"
+    "angular-cookies":"latest"
   }
 }

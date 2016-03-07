@@ -1,4 +1,4 @@
-patApp.factory('DataFactory', function(){
+patApp.factory('DataFactory', function($rootScope){
     var data =
         {
             Assertions: [],
@@ -37,10 +37,20 @@ patApp.factory('DataFactory', function(){
             data.Specification = "";
         },
         getModels: function(){
+            if(sessionStorage.length!=0){
+                data.importedModels = angular.fromJson(sessionStorage.models);
+            }
             return data.importedModels;
         },
-        addModel: function(model){
-            data.importedModels[data.importedModels.length] = model;
+        addModel: function(models){
+            var array = [];
+            
+            for(var i = 0;i<models.length;i++){
+                array[i]=(models[i]);
+            }
+            sessionStorage.models = angular.toJson(array);
         }
     };
+    $rootScope.$on("addmodel",service.addModel);
+    $rootScope.$on("getmodel",service.getModels);
 });
