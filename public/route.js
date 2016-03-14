@@ -1,5 +1,5 @@
-// create the module and name it scotchApp
-// also include ngRoute for all our routing needs
+// create the module and name it patApp
+// add dependencies to it
 var patApp = angular.module('patApp', ['ngRoute','ui.codemirror','ngCookies']);
 
 // configure our routes
