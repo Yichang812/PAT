@@ -24,44 +24,36 @@
 			<button type="button" class="btn btn-info col-sm-offset-10" ng-click="getVerifyResult()">Verify</button>
 			<hr>
 			
-			<!-- <h4>Options</h4>
+			<h4>Options</h4>
 			<div class="form-group col-sm-8">
 				<label for="admBehavior">Admissible Behavior:</label>
 				<select class="form-control" id="admBehavior">
-				    <option>1</option>
-				    <option>2</option>
-				    <option>3</option>
-				    <option>4</option>
+				    <option>All</option>
+				    <option>Event-level Weak Fair Only</option>
+				    <option>Event-level Strong Fair Only</option>
+				    <option>Process-level Weak Fair Only</option>
+				    <option>Process-level Strong Fair Only</option>
+				    <option>Global Fair Only</option>
 			  	</select>
 			</div>
 			<div class="form-group col-sm-4">
-				<label for="timeout">Time Out(second):</label>
-				<select class="form-control" id="timeout">
-				    <option>1</option>
-				    <option>2</option>
-				    <option>3</option>
-				    <option>4</option>
-			  	</select>
+				<label for="timeout">Time Out(minutes):</label>
+				<input type="number" class="form-control">
 			</div>
 			<div class="form-group col-sm-8">
 				<label for="verEngine">Verification Engine:</label>
 				<select class="form-control" id="verEngine">
-				    <option>1</option>
-				    <option>2</option>
-				    <option>3</option>
-				    <option>4</option>
+				    <option>Strongly Connected Component Based Search</option>
 			  	</select>
 			</div>
-			<div class="form-group col-sm-4">
-				<label for="witnessTrace">Generate Witness Trace:</label>
-				<select class="form-control" id="witnessTrace">
-				    <option>1</option>
-				    <option>2</option>
-				    <option>3</option>
-				    <option>4</option>
+			 <div class="form-group col-sm-4">
+    			<label for="trace">Generate Witness Trace</label>
+      			<select class="form-control" id="trace">
+				    <option>Yes</option>
+				    <option>No</option>
 			  	</select>
-			</div> -->
-				<h4>Output:</h4>
+ 			</div>
+			<h4>Output:</h4>
 			<div class="panel panel-default">
 				<div class="panel-body">
 						<div ng-bind-html="verificationResult"></div>

@@ -50,7 +50,6 @@ var myLocalStrategy = new localStrategy(
 			if(!account){
 				return cb(null, false);
 			}
-			console.log(account);
 			account.verify(password, cb);
 		});
 });

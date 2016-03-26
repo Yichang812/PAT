@@ -6,14 +6,12 @@ patApp.controller('editorController',['$scope','$timeout','$sce','$interval','Da
     $scope.currentTab = 'Model_1';
     $scope.isLogin = false;
 
-    $scope.init = function(){
+    $scope.init= function(){
         $scope.isLogin = AuthService.isLogin();
     };
-    
 
     //initiate the first tab with sample content, ref: code mirror
     $scope.tabs = DataFactory.getModels();
-
 
     $scope.tabCount = $scope.tabs.length;
 
@@ -66,11 +64,11 @@ patApp.controller('editorController',['$scope','$timeout','$sce','$interval','Da
         $scope.tabCount--;
     };
 
+    //change syntax highlighting 
     $scope.changeMode = function (content,mode) {
         content.cmOption.mode = mode.toLowerCase();
     };
 
-    //$interval(saveModels,5000,100);
     $scope.saveModels = function(){
          DataFactory.addModel($scope.tabs);
     }
@@ -102,11 +100,14 @@ patApp.controller('editorController',['$scope','$timeout','$sce','$interval','Da
     $scope.loginError = '';
 
     $scope.login = function(user){
-        if(!AuthService.login(angular.copy(user))){
-            $scope.loginError = $sce.trustAsHtml('Wrong email or password!');
-        }
-        $scope.isLogin = AuthService.isLogin();
+        AuthService.login(angular.copy(user)).then(function() {
+            $scope.isLogin = AuthService.isLogin();
+            if(!$scope.isLogin){
+                $scope.loginError = 'Wrong email or password!';
+            }
+        });
     };
+    
     $scope.logout = function(){
         AuthService.logout();
         $scope.isLogin = AuthService.isLogin();
@@ -151,6 +152,7 @@ patApp.controller('editorController',['$scope','$timeout','$sce','$interval','Da
                    dataType:'json',
                    data:{specStr: JSON.stringify(content)},
                    success:function(data){
+                        console.log(data);
                        DataFactory.setAssertions(data.assertions);
                    }
 

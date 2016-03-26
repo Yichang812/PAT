@@ -1,4 +1,4 @@
-patApp.controller('verifierController', ['$scope','DataFactory',function($scope,DataFactory) {
+patApp.controller('verifierController', ['$scope','$sce','DataFactory',function($scope,$sce,DataFactory) {
 	$scope.Assertions = DataFactory.getAssertions();
 	$scope.selectedAssertion;
     $scope.selectedIndex;
@@ -37,12 +37,11 @@ patApp.controller('verifierController', ['$scope','DataFactory',function($scope,
            data:{specStr: JSON.stringify(content), assertion: $scope.selectedAssertion},
            success:function(data){
                 console.log(data);
-                $scope.verificationResult = data.result.statistics.replace(/\n/g,"<br>");
+                $scope.verificationResult = $sce.trustAsHtml(data.result.statistics.replace(/\n/g,"<br>"));
                 
                 $scope.setVerResult($scope.selectedIndex,(data.result.type+1));
                 $scope.$apply();
            }
-
         }).fail(function() {
             alert( "Verification error" );
         });
