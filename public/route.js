@@ -1,33 +1,30 @@
-// create the module and name it scotchApp
-// also include ngRoute for all our routing needs
+// create the module and name it patApp
+// add dependencies to it
 var patApp = angular.module('patApp', ['ngRoute','ui.codemirror','ngCookies']);
 
 // configure our routes
 patApp.config(function($routeProvider) {
     $routeProvider
 
-        // route for the home page
+        // route for the main view (editor)
         .when('/', {
             templateUrl : 'view/editor.html',
             controller  : 'editorController',
             css:'view/css/editor.css'
         })
 
-        // route for the about page
+        // route for the verification view
         .when('/verifier', {
             templateUrl : 'view/verifier.html',
             controller  : 'verifierController'
         })
 
-        // route for the contact page
+        // route for the simulation view
         .when('/simulator', {
             templateUrl : 'view/simulator.html',
             controller  : 'simulatorController'
         })
-        .when('/graph',{
-            templateUrl : 'view/graph.html',
-            controller  : 'graphController'
-        })
+        
         .otherwise({
             redirectTo:'/'
         });
