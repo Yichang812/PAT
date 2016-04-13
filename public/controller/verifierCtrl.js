@@ -2,10 +2,20 @@ patApp.controller('verifierController', ['$scope','$sce','DataFactory',function(
 	$scope.Assertions = DataFactory.getAssertions();
 	$scope.selectedAssertion;
     $scope.selectedIndex;
+    $scope.selectedBehavior;
+    $scope.selectedEngine;
+
+    $scope.Behaviors = $scope.Assertions[0].behavior;
+    $scope.Engines = $scope.Assertions[0].engine;
+    
+
 	$scope.setAssertion = function(assertion,index){
 		$scope.selectedAssertion = assertion;
         $scope.selectedIndex = index;
+        $scope.Behaviors = $scope.Assertions[index].behavior;
+        $scope.Engines = $scope.Assertions[index].engine;
 	};
+
     $scope.backToHome = function(){
         DataFactory.clearSpecification();
         DataFactory.clearAssertions();
@@ -34,9 +44,8 @@ patApp.controller('verifierController', ['$scope','$sce','DataFactory',function(
            url:'api/verification/verify_assertion',
            type:'POST',
            dataType:'json',
-           data:{specStr: JSON.stringify(content), assertion: $scope.selectedAssertion},
+           data:{specStr: JSON.stringify(content), assertion: $scope.selectedAssertion, behavior: $scope.selectedBehavior, engine: $scope.selectedEngine},
            success:function(data){
-                console.log(data);
                 $scope.verificationResult = $sce.trustAsHtml(data.result.statistics.replace(/\n/g,"<br>"));
                 
                 $scope.setVerResult($scope.selectedIndex,(data.result.type+1));

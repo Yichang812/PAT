@@ -91,9 +91,11 @@
         </div>
 
         <span class="splitter"></span>
-        <a class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Check Grammar" ng-click="checkGrammar()"><img src="../view/pic/check_icon.png"/></a>
+        <a class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Check Grammar" ng-disabled="isDisabled" ng-click="checkGrammar()"><img src="../view/pic/check_icon.png"/></a>
         <a class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Simulation"><img src="../view/pic/simulation_icon.png"/></a>
-        <a class="quick-access" ng-class="{'disable':notLogin}" data-toggle="tooltip" data-placement="bottom" title="Verfication" href="#/verifier" ng-click="verification()"><img src="../view/pic/verification_icon.png"/></a>
+        <!-- <a class="quick-access" ng-class="{'disable':notLogin}" data-toggle="tooltip" data-placement="bottom" title="Verfication" href="#/verifier" ng-click="verification()"><img src="../view/pic/verification_icon.png"/></a> -->
+        <a class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Verfication" ng-disabled="isDisabled" ng-click="verification()"><img src="../view/pic/verification_icon.png"/></a>
+
         <a class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Graph Differences"><img src="../view/pic/graph_icon.png"/></a>
     </ul>
 

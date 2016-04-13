@@ -6,17 +6,17 @@
 	    	<h2 class="panel-title">Verification</h2>
 	  	</div>
 	  	<table class="table table-hover">
-					<caption> &nbsp Assertions</caption>
-					<tr ng-repeat="assert in Assertions" ng-click="setAssertion(assert,$index)">
-					<td>{{$index+1}}</td>
-					<td>{{assert}}</td>
-					<td>
-					<span class="glyphicon glyphicon-ok" ng-show="isValid($index)"></span>
-					<span class="glyphicon glyphicon-remove" ng-show="isInvalid($index)"></span>
-					</td>
-					</tr>
+			<caption> &nbsp Assertions</caption>
+			<tr ng-repeat="assert in Assertions" ng-click="setAssertion(assert.assertion,$index)">
+			<td>{{$index+1}}</td>
+			<td>{{assert.assertion}}</td>
+			<td>
+			<span class="glyphicon glyphicon-ok" ng-show="isValid($index)"></span>
+			<span class="glyphicon glyphicon-remove" ng-show="isInvalid($index)"></span>
+			</td>
+			</tr>
 				
-				</table>
+		</table>
 	  	<div class="panel-body">
 			
 			<h4>Selected Assertion:</h4>
@@ -27,26 +27,23 @@
 			<h4>Options</h4>
 			<div class="form-group col-sm-8">
 				<label for="admBehavior">Admissible Behavior:</label>
-				<select class="form-control" id="admBehavior">
-				    <option>All</option>
-				    <option>Event-level Weak Fair Only</option>
-				    <option>Event-level Strong Fair Only</option>
-				    <option>Process-level Weak Fair Only</option>
-				    <option>Process-level Strong Fair Only</option>
-				    <option>Global Fair Only</option>
+				<select class="form-control" id="admBehavior" ng-model="selectedBehavior">
+				    <option ng-repeat="behavior in Behaviors" value="{{$index}}">{{behavior}}</option>
 			  	</select>
 			</div>
 			<div class="form-group col-sm-4">
-				<label for="timeout">Time Out(minutes):</label>
+			<!-- the function for time out has not be implemented yet -->
+				<label for="timeout">Time Out(minutes):</label> 
 				<input type="number" class="form-control">
 			</div>
 			<div class="form-group col-sm-8">
 				<label for="verEngine">Verification Engine:</label>
 				<select class="form-control" id="verEngine">
-				    <option>Strongly Connected Component Based Search</option>
+				    <option ng-repeat="engine in Engines">{{engine}}</option>
 			  	</select>
 			</div>
 			 <div class="form-group col-sm-4">
+			 <!-- the api has not implemented yet -->
     			<label for="trace">Generate Witness Trace</label>
       			<select class="form-control" id="trace">
 				    <option>Yes</option>

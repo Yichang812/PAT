@@ -18,11 +18,13 @@ public class Startup
     {
       string specStr = (string)input.spec;
       string assertionStr = (string)input.assertion;
+      int behavior = (int)input.behavior;
+      int engine = (int)input.engine;
 
       SpecificationBase spec = new Specification(specStr);
       AssertionBase assertion = spec.AssertionDatabase[assertionStr];
 
-      assertion.UIInitialize(null, 0, 0);
+      assertion.UIInitialize(null, behavior, engine);
       assertion.VerificationOutput.GenerateCounterExample = true;
       // assertion.VerificationMode = false;
       assertion.InternalStart();

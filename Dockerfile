@@ -1,11 +1,16 @@
 FROM tjanczuk/edgejs:5.0.0
 
-# update npm
-RUN npm update -g
+# Set working directory for docker container
+WORKDIR /webpat
 
-# install dependencies
-COPY . /src
-RUN cd /src; npm install
+# Install and cache npm dependencies
+COPY package.json /tmp/package.json
+RUN cd /tmp && npm install
+RUN mkdir -p /webpat && cp -a /tmp/node_modules /webpat
+
+# Load application code
+COPY . /webpat
 
 EXPOSE 3000
-CMD ["node", "/src/index.js"]
+
+CMD ["node", "/webpat/index.js"]

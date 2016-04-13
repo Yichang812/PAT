@@ -1,5 +1,5 @@
 
-patApp.controller('editorController',['$scope','$timeout','$sce','$interval','DataFactory','Example','AuthService',function($scope,$timeout,$sce,$interval,DataFactory,Example,AuthService) {
+patApp.controller('editorController',['$scope','$timeout','$sce','$interval','$location','DataFactory','Example','AuthService',function($scope,$timeout,$sce,$interval,$location,DataFactory,Example,AuthService) {
     // The modes
     $scope.modes = ['CSP','Scheme','Javascript'];//syntax supported
     $scope.mode = $scope.modes[0];
@@ -112,8 +112,12 @@ patApp.controller('editorController',['$scope','$timeout','$sce','$interval','Da
         AuthService.logout();
         $scope.isLogin = AuthService.isLogin();
     }
+
+    $scope.isDisabled = false;
+
     $scope.checkGrammar = function(){
         var tab;
+        $scope.isDisabled = true;
         for(var i = 0; i<$scope.tabs.length;i++){
             tab = $scope.tabs[i];
             if(tab.title == $scope.currentTab){
@@ -126,11 +130,13 @@ patApp.controller('editorController',['$scope','$timeout','$sce','$interval','Da
                    data:{specStr: JSON.stringify(content)},
                    success:function(data){
                        $scope.grammarResult = $sce.trustAsHtml(data.result.replace(/\n/g,"<br>"));
+                       $scope.isDisabled = false;
                        $scope.$apply();
                    }
 
                 }).error(function(httpObj, textStatus) { 
                     $scope.loginAlert = true;
+                    $scope.isDisabled = false;
                     $scope.$apply();
                     $timeout(function() {$scope.loginAlert=false;}, 5000);
                 });
@@ -152,12 +158,15 @@ patApp.controller('editorController',['$scope','$timeout','$sce','$interval','Da
                    dataType:'json',
                    data:{specStr: JSON.stringify(content)},
                    success:function(data){
-                        console.log(data);
                        DataFactory.setAssertions(data.assertions);
+                       $location.path('/verifier');
+                       $scope.$apply();
+
                    }
 
                 }).error(function(httpObj, textStatus) {
                     $scope.loginAlert = true;
+                    $scope.isDisabled = false;
                     $scope.$apply();
                     $timeout(function() {$scope.loginAlert=false;}, 5000);
                 });

@@ -21,7 +21,14 @@ patApp.factory('DataFactory', function($rootScope){
         },
         setAssertions: function(assertions){
             for(var i=0;i<assertions.length;i++){
-                data.Assertions[i] = assertions[i];
+                var assert = assertions[i];
+                data.Assertions.push(
+                    {
+                        assertion:assert.assertion,
+                        behavior: assert.behavior,
+                        engine: assert.engine 
+                    }
+                );
             }
         },
         clearAssertions: function(){

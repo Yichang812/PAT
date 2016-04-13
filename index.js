@@ -9,8 +9,8 @@ var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 
-// connect to mongodb
-mongoose.connect('mongodb://localhost/pat');
+// connect to mongodb 500MB database service provided by mlab.com for free
+mongoose.connect('mongodb://webpat:pat2016@ds011870.mlab.com:11870/webpat_user');
 
 // create express application
 var app = express();
@@ -30,13 +30,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 var Account = require('./auth/account_model');
-
-// FOR TEST ONLY - admin account
-var adminAccount = new Account({
-	email: 'admin@email.com',
-	password: 'admin'
-});
-adminAccount.save();
 
 // create local strategy for user authentication
 var myLocalStrategy = new localStrategy(

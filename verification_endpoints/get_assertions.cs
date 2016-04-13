@@ -31,8 +31,12 @@ public class Startup
       
       object[] assertionArray = new object[spec.AssertionDatabase.Count];
       int index = 0;
-      foreach (KeyValuePair<String, AssertionBase> entry in spec.AssertionDatabase) {
-        assertionArray[index++] = entry.Key;
+      foreach (KeyValuePair<String, AssertionBase> entry in spec.AssertionDatabase) {        
+        assertionArray[index++] =  new { 
+          assertion = entry.Key,
+          behavior = entry.Value.ModelCheckingOptions.AddimissibleBehaviorsNames.ToArray(),
+          engine = entry.Value.ModelCheckingOptions.AddimissibleBehaviors[0].VerificationEngines.ToArray()
+        };
       }
       return assertionArray;
     }
