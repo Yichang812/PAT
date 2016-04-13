@@ -25,7 +25,9 @@ var verification_verify_assertion_endpoint = edge.func({
 router.post('/verify_assertion', function(req, res) {
   result = verification_verify_assertion_endpoint({
   	spec: JSON.parse(req.body.specStr),
-  	assertion: req.body.assertion
+  	assertion: req.body.assertion,
+    behavior: parseInt(req.body.behavior),
+    engine: parseInt(req.body.engine)
   }, true);
   res.json({result: result});
 });

@@ -38,8 +38,8 @@
 			</div>
 			<div class="form-group col-sm-8">
 				<label for="verEngine">Verification Engine:</label>
-				<select class="form-control" id="verEngine">
-				    <option ng-repeat="engine in Engines">{{engine}}</option>
+				<select class="form-control" id="verEngine" ng-model="selectedEngine">
+				    <option ng-repeat="engine in Engines" value="{{$index}}">{{engine}}</option>
 			  	</select>
 			</div>
 			 <div class="form-group col-sm-4">

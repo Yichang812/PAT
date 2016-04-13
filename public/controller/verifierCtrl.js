@@ -2,8 +2,8 @@ patApp.controller('verifierController', ['$scope','$sce','DataFactory',function(
 	$scope.Assertions = DataFactory.getAssertions();
 	$scope.selectedAssertion;
     $scope.selectedIndex;
-    $scope.selectedBehavior;
-    $scope.selectedEngine;
+    $scope.selectedBehavior = 0;
+    $scope.selectedEngine = 0;
 
     $scope.Behaviors = $scope.Assertions[0].behavior;
     $scope.Engines = $scope.Assertions[0].engine;
@@ -47,7 +47,6 @@ patApp.controller('verifierController', ['$scope','$sce','DataFactory',function(
            data:{specStr: JSON.stringify(content), assertion: $scope.selectedAssertion, behavior: $scope.selectedBehavior, engine: $scope.selectedEngine},
            success:function(data){
                 $scope.verificationResult = $sce.trustAsHtml(data.result.statistics.replace(/\n/g,"<br>"));
-                
                 $scope.setVerResult($scope.selectedIndex,(data.result.type+1));
                 $scope.$apply();
            }
