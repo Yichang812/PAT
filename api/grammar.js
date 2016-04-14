@@ -10,8 +10,10 @@ var grammar_csp_endpoint = edge.func({
                './dll/PAT.Module.LTS.dll']
 });
 router.post('/csp', function(req, res) {
-  result = grammar_csp_endpoint({spec: JSON.parse(req.body.specStr)}, true);
-  res.json({result: result});
+  result = grammar_csp_endpoint({spec: JSON.parse(req.body.specStr)}, function(err, result) {
+  	if (err) throw err;
+  	res.json({result: result});
+  });
 });
 
 

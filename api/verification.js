@@ -10,8 +10,10 @@ var verification_get_assertions_endpoint = edge.func({
                './dll/PAT.Module.LTS.dll']
 });
 router.post('/assertions', function(req, res) {
-  assertions = verification_get_assertions_endpoint({spec: JSON.parse(req.body.specStr)}, true);
-  res.json({assertions: assertions});
+  verification_get_assertions_endpoint({spec: JSON.parse(req.body.specStr)}, function(err, result) {
+    if (err) throw err;
+    res.json({assertions: result});
+  });
 });
 
 // Verify assertion
@@ -23,13 +25,15 @@ var verification_verify_assertion_endpoint = edge.func({
                './dll/PAT.Module.LTS.dll']
 });
 router.post('/verify_assertion', function(req, res) {
-  result = verification_verify_assertion_endpoint({
+  verification_verify_assertion_endpoint({
   	spec: JSON.parse(req.body.specStr),
   	assertion: req.body.assertion,
     behavior: parseInt(req.body.behavior),
     engine: parseInt(req.body.engine)
-  }, true);
-  res.json({result: result});
+  }, function(err, result) {
+    if (err) throw err;
+    res.json({result: result});
+  });
 });
 
 

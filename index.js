@@ -1,5 +1,23 @@
 'use strict';
 
+var cluster = require('cluster');
+
+if (cluster.isMaster) {
+	// var numCPUs = require('os').cpus().length;
+	var numCPUs = 4;
+
+	for (var i = 0; i < numCPUs; i++) {
+		cluster.fork();
+	}
+
+	// cluster.on('exit', function() {
+	// 	console.log('A worker process died, restarting...');
+	// 	cluster.fork();
+	// });
+} else {
+
+// ******* a single node in cluster ********
+
 var express = require('express');
 var morgan = require('morgan')
 var bodyParser = require('body-parser');
@@ -97,3 +115,8 @@ var server = app.listen(3000, function () {
 
   console.log('PAT listening at http://%s:%s', host, port);
 });
+
+// ************************************************
+
+}
+
