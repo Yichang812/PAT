@@ -1,4 +1,5 @@
 <div class="editor-container" ng-init="init()">
+<div class="overlay" ng-show="btnDisabled"></div>
     <!-----------------menu bar-------------------->
     <ul class="menu-bar">
         <div class="dropdown">
@@ -91,19 +92,17 @@
         </div>
 
         <span class="splitter"></span>
-        <a class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Check Grammar" ng-disabled="isDisabled" ng-click="checkGrammar()"><img src="../view/pic/check_icon.png"/></a>
+        <a class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Check Grammar" ng-disabled="btnDisabled" ng-click="checkGrammar()"><img src="../view/pic/check_icon.png"/></a>
         <a class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Simulation"><img src="../view/pic/simulation_icon.png"/></a>
-        <!-- <a class="quick-access" ng-class="{'disable':notLogin}" data-toggle="tooltip" data-placement="bottom" title="Verfication" href="#/verifier" ng-click="verification()"><img src="../view/pic/verification_icon.png"/></a> -->
-        <a class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Verfication" ng-disabled="isDisabled" ng-click="verification()"><img src="../view/pic/verification_icon.png"/></a>
-
+        <a class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Verfication" ng-disabled="btnDisabled" ng-click="verification()"><img src="../view/pic/verification_icon.png"/></a>
         <a class="quick-access" data-toggle="tooltip" data-placement="bottom" title="Graph Differences"><img src="../view/pic/graph_icon.png"/></a>
     </ul>
 
     <!----------------------- tabs-------------------->
 
     <ul class="nav nav-tabs">
-        <li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.title)}" >
-            <a ng-click="onClickTab(tab)">{{tab.title}}</a><span ng-click="closeTab(tab)">x</span>
+        <li ng-repeat="tab in tabs" ng-class="{active:$index==currentTab}" ng-init="index = $index">
+            <a ng-click="onClickTab(index)">{{tab.title}}</a><span ng-click="closeTab(tab)">x</span>
         </li>
         <li><a ng-click="addTab()">+</a></li>
     </ul>
@@ -121,7 +120,7 @@
 template for editor
 <script type="text/ng-template" id="editorContent">
     <div>
-        <section ng-repeat="content in tabs" ng-show="isThisContent(content)">
+        <section ng-repeat="content in tabs" ng-show="isThisContent($index)">
             <textarea class="editor-content" ui-codemirror="content.cmOption" ng-model="content.cmModel"></textarea>
             <select class="language-selector" ng-model="mode" ng-options="m for m in modes" ng-change="changeMode(content,mode)">
             </select>

@@ -3,8 +3,9 @@ patApp.controller('editorController',['$scope','$timeout','$sce','$interval','$l
     // The modes
     $scope.modes = ['CSP','Scheme','Javascript'];//syntax supported
     $scope.mode = $scope.modes[0];
-    $scope.currentTab = 'Model_1';
+    $scope.currentTab = 0;
     $scope.isLogin = false;
+    $scope.btnDisabled = false;
 
     $scope.init= function(){
         $scope.isLogin = AuthService.isLogin();
@@ -12,20 +13,16 @@ patApp.controller('editorController',['$scope','$timeout','$sce','$interval','$l
 
     //initiate the first tab with sample content, ref: code mirror
     $scope.tabs = DataFactory.getModels();
-
     $scope.tabCount = $scope.tabs.length;
 
-    //check if a tab is active
-    $scope.isActiveTab = function(tabTitle) {
-        return tabTitle == $scope.currentTab;
-    };
     //check if the content belong to active tab
-    $scope.isThisContent = function(content){
-        return content.title == $scope.currentTab;
+    $scope.isThisContent = function(index){
+        return index == $scope.currentTab;
     };
     //set the clicked tab to active tab
-    $scope.onClickTab = function (tab) {
-        $scope.currentTab = tab.title;
+    $scope.onClickTab = function (index) {
+        console.log(index);
+        $scope.currentTab = index;
     };
 
     $scope.addTab = function(title,content){
@@ -53,7 +50,8 @@ patApp.controller('editorController',['$scope','$timeout','$sce','$interval','$l
         );
 
         //set the new-create tab to active
-        $scope.currentTab = newTitle;
+        
+        $scope.currentTab = $scope.tabCount-1;
         if(!$scope.$$phase)$scope.$apply();
         $scope.saveModels();
     };
@@ -113,65 +111,53 @@ patApp.controller('editorController',['$scope','$timeout','$sce','$interval','$l
         $scope.isLogin = AuthService.isLogin();
     }
 
-    $scope.isDisabled = false;
+   
 
     $scope.checkGrammar = function(){
-        var tab;
-        $scope.isDisabled = true;
-        for(var i = 0; i<$scope.tabs.length;i++){
-            tab = $scope.tabs[i];
-            if(tab.title == $scope.currentTab){
-                
-                var content = tab.cmModel;
-                $.ajax({
-                   url:'api/grammar/csp',
-                   type:'POST',
-                   dataType:'json',
-                   data:{specStr: JSON.stringify(content)},
-                   success:function(data){
-                       $scope.grammarResult = $sce.trustAsHtml(data.result.replace(/\n/g,"<br>"));
-                       $scope.isDisabled = false;
-                       $scope.$apply();
-                   }
+        var content = $scope.tabs[$scope.currentTab].cmModel;
+        $scope.btnDisabled = true;
+        $.ajax({
+           url:'api/grammar/csp',
+           type:'POST',
+           dataType:'json',
+           data:{specStr: JSON.stringify(content)},
+           success:function(data){
+               $scope.grammarResult = $sce.trustAsHtml(data.result.replace(/\n/g,"<br>"));
+               $scope.btnDisabled = false;
+               $scope.$apply();
+           }
 
-                }).error(function(httpObj, textStatus) { 
-                    $scope.loginAlert = true;
-                    $scope.isDisabled = false;
-                    $scope.$apply();
-                    $timeout(function() {$scope.loginAlert=false;}, 5000);
-                });
-            }
-        }
-
+        }).error(function(httpObj, textStatus) { 
+            $scope.loginAlert = true;
+            $scope.btnDisabled = false;
+            $scope.$apply();
+            $timeout(function() {$scope.loginAlert=false;}, 5000);
+        });
     };
+
     $scope.verification = function(){
-        var tab;
-        for(var i = 0; i<$scope.tabs.length;i++){
-            tab = $scope.tabs[i];
-            if(tab.title == $scope.currentTab){
-                
-                var content = tab.cmModel;
-                DataFactory.setSpecification(content);
-                $.ajax({
-                   url:'api/verification/assertions',
-                   type:'POST',
-                   dataType:'json',
-                   data:{specStr: JSON.stringify(content)},
-                   success:function(data){
-                       DataFactory.setAssertions(data.assertions);
-                       $location.path('/verifier');
-                       $scope.$apply();
+        $scope.btnDisabled = true;
+        var content = $scope.tabs[$scope.currentTab].cmModel;
+        DataFactory.setSpecification(content);
+        $.ajax({
+           url:'api/verification/assertions',
+           type:'POST',
+           dataType:'json',
+           data:{specStr: JSON.stringify(content)},
+           success:function(data){
+               DataFactory.setAssertions(data.assertions);
+               $scope.btnDisabled = false; 
+               $location.path('/verifier');
+               $scope.$apply();
+           }
 
-                   }
-
-                }).error(function(httpObj, textStatus) {
-                    $scope.loginAlert = true;
-                    $scope.isDisabled = false;
-                    $scope.$apply();
-                    $timeout(function() {$scope.loginAlert=false;}, 5000);
-                });
-            }
-        }
-    }
+        }).error(function(httpObj, textStatus) {
+            $scope.loginAlert = true;
+            $scope.btnDisabled = false;
+            $scope.$apply();
+            $timeout(function() {$scope.loginAlert=false;}, 5000);
+        });
+      
+    };
 }]);
 

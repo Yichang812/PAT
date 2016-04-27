@@ -4,6 +4,8 @@ patApp.controller('verifierController', ['$scope','$sce','DataFactory',function(
     $scope.selectedIndex;
     $scope.selectedBehavior = 0;
     $scope.selectedEngine = 0;
+    $scope.verifyBtn = "Verify";
+    $scope.verifyDisable = false;
 
     $scope.Behaviors = $scope.Assertions[0].behavior;
     $scope.Engines = $scope.Assertions[0].engine;
@@ -40,6 +42,8 @@ patApp.controller('verifierController', ['$scope','$sce','DataFactory',function(
     }
 	$scope.getVerifyResult = function(){ 
 		var content = DataFactory.getSpecification();
+        $scope.verifyBtn = "Verifing...";
+        $scope.verifyDisable = true;
         $.ajax({
            url:'api/verification/verify_assertion',
            type:'POST',
@@ -48,6 +52,8 @@ patApp.controller('verifierController', ['$scope','$sce','DataFactory',function(
            success:function(data){
                 $scope.verificationResult = $sce.trustAsHtml(data.result.statistics.replace(/\n/g,"<br>"));
                 $scope.setVerResult($scope.selectedIndex,(data.result.type+1));
+                $scope.verifyBtn = "Verify";
+                $scope.verifyDisable = false;
                 $scope.$apply();
            }
         }).fail(function() {
