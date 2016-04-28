@@ -8,7 +8,8 @@ patApp.controller('editorController',['$scope','$timeout','$sce','$interval','$l
     $scope.btnDisabled = false;
 
     $scope.init= function(){
-        $scope.isLogin = AuthService.isLogin();
+        AuthService.isLogin()
+        .then(function(data){$scope.isLogin = data.data.islogin;});
     };
 
     //initiate the first tab with sample content, ref: code mirror
@@ -21,7 +22,6 @@ patApp.controller('editorController',['$scope','$timeout','$sce','$interval','$l
     };
     //set the clicked tab to active tab
     $scope.onClickTab = function (index) {
-        console.log(index);
         $scope.currentTab = index;
     };
 
@@ -98,35 +98,47 @@ patApp.controller('editorController',['$scope','$timeout','$sce','$interval','$l
     $scope.loginError = '';
 
     $scope.login = function(user){
-        AuthService.login(angular.copy(user)).then(function() {
-            $scope.isLogin = AuthService.isLogin();
-            if(!$scope.isLogin){
-                $scope.loginError = 'Wrong email or password!';
-            }
-        });
+        AuthService.login(angular.copy(user))
+        .then(function(){
+                AuthService.isLogin()
+                .then(function(data){$scope.isLogin = data.data.islogin;});
+            },function(){
+                $scope.loginError = $sce.trustAsHtml('Wrong email or password!');
+            });
+        
     };
     
     $scope.logout = function(){
-        AuthService.logout();
-        $scope.isLogin = AuthService.isLogin();
+        AuthService.isLogin()
+        .then(function(data){$scope.isLogin = data.data.islogin;});
     }
-
-   
-
-    $scope.checkGrammar = function(){
-        var content = $scope.tabs[$scope.currentTab].cmModel;
+   $scope.checkGrammar = function(){
         $scope.btnDisabled = true;
-        $.ajax({
-           url:'api/grammar/csp',
-           type:'POST',
-           dataType:'json',
-           data:{specStr: JSON.stringify(content)},
-           success:function(data){
-               $scope.grammarResult = $sce.trustAsHtml(data.result.replace(/\n/g,"<br>"));
-               $scope.btnDisabled = false;
-               $scope.$apply();
-           }
+        var content = $scope.tabs[$scope.currentTab].cmModel;
+        postToGrammar(content);
+   }
 
+   $scope.verification = function(){
+        $scope.btnDisabled = true;
+        $scope.error = false;
+        var content = $scope.tabs[$scope.currentTab].cmModel;
+        DataFactory.setSpecification(content);
+        postToVerify(content);
+
+   }
+
+    function postToGrammar(content){
+        $.ajax({
+            url:'api/grammar/csp',
+            type:'POST',
+            dataType:'json',
+            data:{specStr: JSON.stringify(content)},
+            success:function(data){
+                $scope.grammarResult = $sce.trustAsHtml(data.result.replace(/\n/g,"<br>"));
+                $scope.btnDisabled = false;
+                $scope.$apply();
+               
+            }
         }).error(function(httpObj, textStatus) { 
             $scope.loginAlert = true;
             $scope.btnDisabled = false;
@@ -135,29 +147,42 @@ patApp.controller('editorController',['$scope','$timeout','$sce','$interval','$l
         });
     };
 
-    $scope.verification = function(){
-        $scope.btnDisabled = true;
-        var content = $scope.tabs[$scope.currentTab].cmModel;
-        DataFactory.setSpecification(content);
+    function postToVerify(content){
         $.ajax({
-           url:'api/verification/assertions',
+           url:'api/grammar/csp',
            type:'POST',
            dataType:'json',
            data:{specStr: JSON.stringify(content)},
            success:function(data){
-               DataFactory.setAssertions(data.assertions);
-               $scope.btnDisabled = false; 
-               $location.path('/verifier');
-               $scope.$apply();
+                if(data.result!="Error in the model"){
+                    $.ajax({
+                        url:'api/verification/assertions',
+                        type:'POST',
+                        dataType:'json',
+                        data:{specStr: JSON.stringify(content)},
+                        success:function(data){
+                            DataFactory.setAssertions(data.assertions); 
+                            $location.path('/verifier');
+                            $scope.$apply();
+                        }
+                    });
+                }else{
+                    $scope.grammarResult = $sce.trustAsHtml(data.result.replace(/\n/g,"<br>"));
+                    alert("Grammar Error!");
+                    $scope.btnDisabled = false;
+                    $scope.$apply();
+                }
+                
            }
 
-        }).error(function(httpObj, textStatus) {
+        }).error(function(httpObj, textStatus) { 
             $scope.loginAlert = true;
             $scope.btnDisabled = false;
             $scope.$apply();
             $timeout(function() {$scope.loginAlert=false;}, 5000);
         });
-      
+        
+        
     };
+    
 }]);
-

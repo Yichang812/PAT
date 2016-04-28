@@ -57,7 +57,7 @@ patApp.controller('verifierController', ['$scope','$sce','DataFactory',function(
                 $scope.$apply();
            }
         }).fail(function() {
-            alert( "Verification error" );
+            alert("Verification error" );
         });
           
     }

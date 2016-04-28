@@ -106,6 +106,15 @@ app.get('/logout', (req, res) => {
 	});
 });
 
+app.get('/islogin', function(req,res){
+	console.log(req.user);
+	if(req.user){
+		res.json({islogin:true});
+	}else{
+		res.json({islogin:false});
+	}
+});
+
 // api router
 app.use('/api', require('./api/index'));
 
