@@ -3,7 +3,7 @@
 var patApp = angular.module('patApp', ['ngRoute','ui.codemirror','ngCookies']);
 
 // configure our routes
-patApp.config(function($routeProvider) {
+patApp.config(function($routeProvider,$locationProvider) {
     $routeProvider
 
         // route for the main view (editor)
@@ -28,4 +28,7 @@ patApp.config(function($routeProvider) {
         .otherwise({
             redirectTo:'/'
         });
+
+        //use the HTML5 History API
+        $locationProvider.html5Mode(true);
 });
