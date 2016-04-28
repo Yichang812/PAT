@@ -43,6 +43,7 @@ _The API are implemented by Express.js_
 | ------|------- | -----|-------- |
 | Login  | login | POST | {username: _username_, password: _password_}|
 | Logout  | logout | GET| |
+| Check login status| islogin|GET| |
 | Check grammar| api/grammar/csp| POST| {specStr: _model content_}|
 | Get assertion list| api/verification/assertions| POST|{spectStr: _model content_}|
 | Verify selected assertion| api/verification/verify_assertion| POST| {specStr: _model content_, assertion: _selected assertion_, behavior: _behavior_, engine: _engine_}|
