@@ -5,7 +5,7 @@ patApp.controller('verifierController', ['$scope','$sce','DataFactory',function(
     $scope.selectedBehavior = 0;
     $scope.selectedEngine = 0;
     $scope.verifyBtn = "Verify";
-    $scope.verifyDisable = false;
+    $scope.verifyDisable = true;
 
     $scope.Behaviors = $scope.Assertions[0].behavior;
     $scope.Engines = $scope.Assertions[0].engine;
@@ -16,6 +16,7 @@ patApp.controller('verifierController', ['$scope','$sce','DataFactory',function(
         $scope.selectedIndex = index;
         $scope.Behaviors = $scope.Assertions[index].behavior;
         $scope.Engines = $scope.Assertions[index].engine;
+        $scope.verifyDisable = false;
 	};
 
     $scope.backToHome = function(){
